@@ -1,0 +1,72 @@
+{
+  "root": "apps/label-designer",
+  "sourceRoot": "apps/label-designer/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/label-designer",
+        "index": "apps/label-designer/src/index.html",
+        "baseHref": "/",
+        "main": "apps/label-designer/src/main.tsx",
+        "polyfills": "apps/label-designer/src/polyfills.ts",
+        "tsConfig": "apps/label-designer/tsconfig.app.json",
+        "assets": [
+          "apps/label-designer/src/favicon.ico",
+          "apps/label-designer/src/assets"
+        ],
+        "styles": ["apps/label-designer/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/label-designer/src/environments/environment.ts",
+              "with": "apps/label-designer/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "label-designer:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "label-designer:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/label-designer/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/label-designer"],
+      "options": {
+        "jestConfig": "apps/label-designer/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

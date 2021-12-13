@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "label-designer": "apps/label-designer",
+    "label-designer-e2e": "apps/label-designer-e2e"
+  }
+}
