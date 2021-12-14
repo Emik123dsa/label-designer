@@ -418,7 +418,7 @@ export function NxWelcome({ title }: { title: string }) {
           <div id="welcome">
             <h1>
               <span> Hello there, </span>
-              Welcome {title} 👋
+              Welcome {title}
             </h1>
           </div>
 
@@ -442,6 +442,7 @@ export function NxWelcome({ title }: { title: string }) {
               </h2>
               <a href="#commands"> What&apos;s next? </a>
             </div>
+
             <div className="logo-container">
               <svg
                 fill="currentColor"
