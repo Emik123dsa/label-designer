@@ -1,1 +1,1 @@
-export * from "./simple-preview-form"
+export * from './simple-preview-form';
