@@ -1,0 +1,6 @@
+{
+  "**/*.ts?(x)": [
+    "yarn run affected:lint -- --uncommitted --fix --parallel",
+    "yarn run format:write -- --uncommitted"
+  ]
+}
