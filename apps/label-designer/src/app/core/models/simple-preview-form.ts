@@ -5,7 +5,7 @@
  * @interface SimplePreviewForm as model.
  */
 export interface SimplePreviewForm {
-  partType: string;
+  type: string;
   description: string;
   countryCode: string;
   productCode: number;

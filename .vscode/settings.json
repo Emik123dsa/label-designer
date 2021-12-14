@@ -1,0 +1,5 @@
+{
+    "java.project.sourcePaths": [
+        "apps/label-designer/src/app/shared/helpers/preview/preview-card"
+    ]
+}

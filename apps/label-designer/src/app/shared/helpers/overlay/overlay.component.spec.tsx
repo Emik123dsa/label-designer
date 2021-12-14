@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Preview from './preview';
+import Overlay from './overlay.component';
 
-describe('Preview', () => {
+describe('Overlay', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Preview />);
+    const { baseElement } = render(<Overlay />);
     expect(baseElement).toBeTruthy();
   });
 });
