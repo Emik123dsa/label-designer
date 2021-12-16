@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Design from './design';
+import { Header } from './header.component';
 
-describe('Design', () => {
+describe('Header', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Design />);
+    const { baseElement } = render(<Header.Layout />);
     expect(baseElement).toBeTruthy();
   });
 });

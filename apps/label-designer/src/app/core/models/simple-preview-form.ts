@@ -10,3 +10,19 @@ export interface SimplePreviewForm {
   countryCode: string;
   productCode: number;
 }
+
+/**
+ * Implementation of simple preview form.
+ *
+ * @export SimplePreviewFormImpl as form impl.
+ * @class SimplePreviewFormImpl as string class.
+ * @implements SimplePreviewForm as interface implementation.
+ */
+export class SimplePreviewFormImpl implements SimplePreviewForm {
+  public constructor(
+    public type: string,
+    public description: string,
+    public countryCode: string,
+    public productCode: number
+  ) {}
+}

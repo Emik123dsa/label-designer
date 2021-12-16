@@ -1,4 +1,8 @@
-import { Component, ReactNode } from 'react';
+import { Component, Fragment, ReactNode } from 'react';
+import { renderRoutes } from 'react-router-config';
+import { Header, Footer } from '@layouts';
+import { routes } from './preview/preview-routing.module';
+
 import './app.component.scss';
 
 /* eslint-disable-next-line */
@@ -13,21 +17,19 @@ export interface AppProps {}
  */
 export class App extends Component<AppProps, unknown> {
   /**
-   * Creates an instance of App.
-   *
-   * @param  {Readonly<AppProps>} props
-   * @memberof App
-   */
-  public constructor(props: Readonly<AppProps>) {
-    super(props);
-  }
-
-  /**
    * Render application context.
    *
    * @memberof App of render.
    */
   public override render(): ReactNode {
-    return <div className="container mx-4">uptodate</div>;
+    return (
+      <Fragment>
+        <Header.Layout />
+        <main id="main" className="main" role="main">
+          {renderRoutes(routes)}
+        </main>
+        <Footer.Layout />
+      </Fragment>
+    );
   }
 }

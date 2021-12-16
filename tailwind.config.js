@@ -1,9 +1,18 @@
+const path = require('path');
+const { createGlobPatternsForDependencies } = require('@nrwl/react/tailwind');
+
 const defaultTheme = require('tailwindcss/defaultTheme');
+
+const defaultContent = [path.resolve('apps/**/*.{ts,tsx,html}')];
 
 module.exports = {
   mode: 'jit',
 
-  content: ['./src/**/*.{html,ts,tsx,vue}', './public/**/*.html'],
+  content: defaultContent.concat(
+    createGlobPatternsForDependencies(
+      path.join(__dirname, 'apps/label-designer/**/*.{ts,tsx,jsx,js,html}')
+    )
+  ),
 
   future: {
     standardFontWeights: true,
@@ -12,7 +21,7 @@ module.exports = {
     purgeLayersByDefault: true,
   },
 
-  darkMode: 'media',
+  darkMode: 'class',
 
   theme: {
     extend: {
@@ -42,7 +51,6 @@ module.exports = {
       lg: '0.5rem',
       xl: '0.75rem',
       full: '9999px',
-      DEFAULT: '0.25rem',
     },
 
     borderColor: {
@@ -108,9 +116,10 @@ module.exports = {
       borderWidth: ['responsive', 'hover'],
     },
   },
+
   plugins: [
-    // require('@tailwindcss/ui'),
-    // require('@tailwindcss/jit'),
+    /* require('@tailwindcss/ui'),
+       require('@tailwindcss/jit'), */
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),

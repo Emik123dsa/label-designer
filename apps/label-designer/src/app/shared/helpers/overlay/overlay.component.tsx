@@ -1,18 +1,18 @@
 import { Component } from 'react';
 
-import './overlay.module.scss';
+import './overlay.component.scss';
 
 /* eslint-disable-next-line */
-export interface OverlayProps {}
+export interface OverlayProps {
+  force?: boolean;
+}
 
 export class Overlay extends Component<OverlayProps> {
   render() {
     return (
       <div>
-        <p>Welcome to Overlay!</p>
+        <p>Loading ...</p>
       </div>
     );
   }
 }
-
-export default Overlay;

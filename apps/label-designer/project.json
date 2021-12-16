@@ -16,11 +16,12 @@
         "tsConfig": "apps/label-designer/tsconfig.app.json",
         "assets": [
           "apps/label-designer/src/favicon.ico",
-          "apps/label-designer/src/assets"
+          "apps/label-designer/src/assets",
+          "apps/label-designer/src/robots.txt"
         ],
         "styles": ["apps/label-designer/src/styles.scss"],
         "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
+        "webpackConfig": "apps/label-designer/webpack-tailwind.config.js"
       },
       "configurations": {
         "production": {
@@ -35,7 +36,14 @@
           "sourceMap": false,
           "namedChunks": false,
           "extractLicenses": true,
-          "vendorChunk": false
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
         }
       }
     },

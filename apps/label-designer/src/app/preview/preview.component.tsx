@@ -1,18 +1,34 @@
 import { Component } from 'react';
 
-import './preview.module.scss';
+import { PreviewForm } from '@/preview/preview-form/preview-form.component';
+
+// import './preview.module.scss';
 
 /* eslint-disable-next-line */
 export interface PreviewProps {}
 
+/**
+ * Preview Page Component.
+ *
+ * @export Preview as component.
+ * @class Preview of string class.
+ * @extends Component<PreviewProps>
+ */
 export class Preview extends Component<PreviewProps> {
-  render() {
+  /**
+   * Render preview page.
+   *
+   * @memberof Preview
+   */
+  public override render() {
     return (
-      <div>
-        <p>Welcome to Preview!</p>
-      </div>
+      <section role="contentinfo">
+        <div className="container">
+          <div className="max-w-full">
+            <PreviewForm />
+          </div>
+        </div>
+      </section>
     );
   }
 }
-
-export default Preview;

@@ -6,10 +6,13 @@ module.exports = {
   map: false,
   plugins: {
     precss: {},
-    cssnano: {},
+
+    // ...(process.env.NODE_ENV === 'production' ? cssnano: {} : ...{})
+
     tailwindcss: {
       config: path.join(__dirname, './tailwind.config.js'),
     },
+
     autoprefixer: {
       flexbox: 'no-2009',
       grid: true,

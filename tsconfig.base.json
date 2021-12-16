@@ -18,5 +18,6 @@
       "@frontend/design": ["libs/design/src/index.ts"]
     }
   },
+  "includes": ["**/*.ts"],
   "exclude": ["node_modules", "tmp"]
 }

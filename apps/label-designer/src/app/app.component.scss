@@ -1,0 +1,15 @@
+@mixin screen-layout($offset: 8) {
+  @apply flex
+         flex-col;
+
+  @apply tablet:min-h-screen
+         my-8 tablet:my-auto;
+
+  @apply justify-center
+         justify-self-center
+         justify-items-center;
+}
+
+#main {
+  @include screen-layout();
+}

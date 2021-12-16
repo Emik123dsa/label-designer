@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import Preview from './preview.component';
+import { Preview } from './preview.component';
 
 describe('Preview', () => {
   it('should render successfully', () => {
