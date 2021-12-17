@@ -11,24 +11,57 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./",
     "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["./src/app/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@core/*": ["./src/app/core/*"],
-      "@store/*": ["./src/app/store/*"],
-      "@shared/*": ["./src/app/shared/*"],
-      "@services": ["./src/app/core/services/index.ts"],
-      "@adapters": ["./src/app/core/adapters/index.ts"],
-      "@hooks": ["./src/app/core/adapters/index.ts"],
-      "@models": ["./src/app/core/models/index.ts"],
-      "@validations": ["./src/app/core/validations/index.ts"],
-      "@handlers": ["./src/app/core/handlers/index.ts"],
-      "@layouts": ["./src/app/shared/layouts/index.ts"],
-      "@helpers": ["./src/app/shared/helpers/index.ts"]
+      "~/*": [
+        "./src/*"
+      ],
+      "@/*": [
+        "./src/app/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ],
+      "@core/*": [
+        "./src/app/core/*"
+      ],
+      "@store/*": [
+        "./src/app/store/*"
+      ],
+      "@shared/*": [
+        "./src/app/shared/*"
+      ],
+      "@services": [
+        "./src/app/core/services/index.ts"
+      ],
+      "@adapters": [
+        "./src/app/core/adapters/index.ts"
+      ],
+      "@hooks": [
+        "./src/app/core/adapters/index.ts"
+      ],
+      "@models": [
+        "./src/app/core/models/index.ts"
+      ],
+      "@validations": [
+        "./src/app/core/validations/index.ts"
+      ],
+      "@handlers": [
+        "./src/app/core/handlers/index.ts"
+      ],
+      "@layouts": [
+        "./src/app/shared/layouts/index.ts"
+      ],
+      "@helpers": [
+        "./src/app/shared/helpers/index.ts"
+      ],
+      "@scribos/design": [
+        "../../libs/design/src/index.ts"
+      ]
     }
   },
   "files": [],
-  "include": [],
+  "include": [
+    "**/*.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.app.json"

@@ -1,8 +1,6 @@
 import { Component } from 'react';
-
+import tw from 'twin.macro';
 import { PreviewForm } from '@/preview/preview-form/preview-form.component';
-
-// import './preview.module.scss';
 
 /* eslint-disable-next-line */
 export interface PreviewProps {}
@@ -20,11 +18,11 @@ export class Preview extends Component<PreviewProps> {
    *
    * @memberof Preview
    */
-  public override render() {
+  public override render(): JSX.Element {
     return (
       <section role="contentinfo">
-        <div className="container">
-          <div className="max-w-full">
+        <div className="container block">
+          <div className="max-w-full relative">
             <PreviewForm />
           </div>
         </div>

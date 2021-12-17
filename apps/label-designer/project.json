@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@nrwl/web:webpack",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/label-designer",
@@ -19,7 +21,10 @@
           "apps/label-designer/src/assets",
           "apps/label-designer/src/robots.txt"
         ],
-        "styles": ["apps/label-designer/src/styles.scss"],
+        "styles": [
+          "apps/label-designer/src/styles.scss",
+          "apps/label-designer/src/assets/styles/global/global.scss"
+        ],
         "scripts": [],
         "webpackConfig": "apps/label-designer/webpack-tailwind.config.js"
       },
@@ -62,14 +67,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/label-designer/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "apps/label-designer/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/label-designer"],
+      "outputs": [
+        "coverage/apps/label-designer"
+      ],
       "options": {
         "jestConfig": "apps/label-designer/jest.config.js",
         "passWithNoTests": true

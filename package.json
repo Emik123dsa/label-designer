@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "scribos",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -29,6 +29,8 @@
   },
   "private": false,
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "connected-react-router": "^6.9.2",
     "core-js": "^3.6.5",
     "formik": "^2.2.9",
@@ -52,12 +54,14 @@
     "rxjs": "^7.4.0",
     "string-format": "^2.0.0",
     "tslib": "^2.0.0",
+    "twin.macro": "^2.8.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "@commitlint/prompt-cli": "^15.0.0",
+    "@mertasan/tailwindcss-variables": "^2.0.0",
     "@nrwl/cli": "13.3.1",
     "@nrwl/cypress": "13.3.1",
     "@nrwl/eslint-plugin-nx": "13.3.1",
@@ -119,7 +123,6 @@
     "stylelint-config-standard": "^24.0.0",
     "stylelint-scss": "^4.0.1",
     "tailwind": "^4.0.0",
-    "tailwind-css-variables": "^3.0.1",
     "tailwindcss": "^3.0.2",
     "tailwindcss-children": "^2.1.0",
     "tailwindcss-interaction-variants": "^5.0.0",

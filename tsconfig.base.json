@@ -10,14 +10,24 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@frontend/design": ["libs/design/src/index.ts"]
+      "@scribos/design": [
+        "libs/design/src/index.ts"
+      ]
     }
   },
-  "includes": ["**/*.ts"],
-  "exclude": ["node_modules", "tmp"]
+  "includes": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

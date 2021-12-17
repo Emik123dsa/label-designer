@@ -54,29 +54,38 @@ module.exports = {
     },
 
     borderColor: {
-      primary: 'var(--color-primary)',
-      secondary: 'var(--color-secondary)',
-
-      dark: {
-        DEFAULT: 'var(--color-dark)',
-      },
-      white: {
-        DEFAULT: 'var(--color-white)',
-      },
+      dark: 'var(--colors-dark)',
+      white: 'var(--colors-white)',
+      primary: 'var(--colors-primary)',
+      secondary: 'var(--colors-secondary)',
     },
 
     colors: {
-      primary: 'var(--color-primary)',
-      secondary: 'var(--color-secondary)',
-
-      dark: {
-        DEFAULT: 'var(--color-dark)',
-      },
-      white: {
-        DEFAULT: 'var(--color-white)',
-      },
+      dark: 'var(--colors-dark)',
+      white: 'var(--colors-white)',
+      primary: 'var(--colors-primary)',
+      secondary: 'var(--colors-secondary)',
     },
 
+    variables: {
+      DEFAULT: {
+        sizes: {},
+        colors: {
+          dark: {
+            DEFAULT: '#282c34',
+          },
+          white: {
+            DEFAULT: '#FFFFFF',
+          },
+          primary: {
+            DEFAULT: '#0097d4',
+          },
+          secondary: {
+            DEFAULT: '#e7000f',
+          },
+        },
+      },
+    },
     fontSize: {
       base: '1rem',
       xs: '0.5rem',
@@ -120,6 +129,7 @@ module.exports = {
   plugins: [
     /* require('@tailwindcss/ui'),
        require('@tailwindcss/jit'), */
+    require('@mertasan/tailwindcss-variables'),
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),

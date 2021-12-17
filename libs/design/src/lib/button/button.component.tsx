@@ -55,12 +55,14 @@ export const BUTTON_VALID_COLORS: ButtonPropsColor[] = ['primary', 'secondary'];
  *
  * @external type props size.
  */
-export type ButtonPropsSize = 'small' | 'medium' | 'large';
+export type ButtonPropsSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export const BUTTON_VALID_SIZES: ButtonPropsSize[] = [
-  'small',
-  'medium',
-  'large',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
 ];
 
 /* eslint-disable-next-line */
@@ -68,7 +70,6 @@ export interface ButtonProps extends Partial<A11yAriaAttrs> {
   id?: string;
   name?: string;
   type?: ButtonPropsType;
-
   tag: ButtonPropsTag;
   color: ButtonPropsColor;
   size: ButtonPropsSize;
@@ -80,7 +81,7 @@ export const BUTTON_PROPS_FACTORY: () => ButtonProps =
     type: 'button',
     tag: 'button',
     color: 'primary',
-    size: 'medium',
+    size: 'sm',
     disabled: false,
   });
 
@@ -189,7 +190,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
         type={type}
         disabled={disabled}
         aria-label={ariaLabel || Button.defaultName}
-        aria-hidden={ariaHidden || !disabled}
+        aria-hidden={ariaHidden || disabled}
       >
         {this._renderChildrenRef()}
       </button>
