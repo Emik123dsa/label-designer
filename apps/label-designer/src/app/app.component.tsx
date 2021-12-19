@@ -5,6 +5,7 @@ import { routes } from './preview/preview-routing.module';
 
 import './app.component.scss';
 import { Background } from './shared/layouts/background/background.component';
+import { Overlay } from './shared/helpers';
 
 /* eslint-disable-next-line */
 export interface AppProps {}

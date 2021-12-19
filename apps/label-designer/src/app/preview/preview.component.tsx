@@ -75,7 +75,7 @@ export class Preview extends Component<PreviewProps> {
         <div className="container block">
           <div className="max-w-full relative">
             {formsPreview && !ArrayUtil.isEmpty(formsPreview) ? (
-              <Suspense fallback={<Overlay force={true} />}>
+              <Suspense fallback={null}>
                 <PreviewForm formsPreview={formsPreview} />
               </Suspense>
             ) : null}

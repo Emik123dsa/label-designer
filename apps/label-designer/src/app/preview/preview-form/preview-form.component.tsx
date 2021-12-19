@@ -187,7 +187,7 @@ export class PreviewForm extends Component<PreviewFormProps, PreviewFormState> {
 
     // @internal render preview form.
     return (
-      <div className="flex flex-row flex-nowrap">
+      <div className="flex flex-row flex-nowrap ">
         <div className="flex-shrink justify-center justify-self-center">
           <PreviewFormWrapper>
             <GridList>

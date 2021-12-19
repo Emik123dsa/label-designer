@@ -19,6 +19,8 @@ export class Background {
    * @memberof Background
    */
   public static StaticLayout = class extends React.Component<BackgroundLayoutProps> {
+    public static BackgroundLocation = '/assets/images/static-background';
+
     /**
      * Render Background Layout.
      *
@@ -26,17 +28,18 @@ export class Background {
      */
     public override render(): JSX.Element {
       return (
-        <div className="">
-          {/*   <picture className="">
+        <div className="fixed inset-0 -z-10 bg-dark opacity-30">
+          <picture>
             <source
               type="image/webp"
-              srcSet="/assets/images/static-background.webp"
+              srcSet={`${Background.StaticLayout.BackgroundLocation}.webp`}
             />
             <img
               alt="static-background"
-              src="/assets/images/static-background.jpg"
+              className="min-w-full h-full bg-clip-border bg-no-repeat bg-cover bg-fixed"
+              src={`${Background.StaticLayout.BackgroundLocation}.png`}
             />
-          </picture> */}
+          </picture>
         </div>
       );
     }
