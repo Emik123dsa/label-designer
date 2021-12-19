@@ -1,0 +1,22 @@
+@forward 'forms';
+@forward 'fonts';
+
+$root-size-default: 'base';
+$root-font-default: 'primary';
+
+// Creates an instance of root layout mixin.
+@mixin root-layout($font: $root-font-default, $size: $root-size-default) {
+  @apply relative;
+
+  @apply inline-block;
+
+  @apply min-w-full h-full;
+
+  @apply font-#{$font};
+  @apply text-#{$size}
+         text-dark;
+}
+
+#root {
+  @include root-layout();
+}

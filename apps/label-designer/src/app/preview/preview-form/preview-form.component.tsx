@@ -1,10 +1,53 @@
-import { Fragment, Component } from 'react';
+/* eslint-disable @typescript-eslint/ban-types */
+import memoize from 'memoize-one';
+import React, { PureComponent, Component, FormEvent } from 'react';
+import classnames from 'classnames';
+import { Formik } from 'formik';
 import { Preview } from '@helpers';
-import tw from 'twin.macro';
+import { ReactiveConnect } from 'reactive-connect';
+import { StringUtil } from '@core/utils/string.util';
+import { FormInternalState, FormMultiOption } from '@store/domains/forms.state';
+
+import {
+  GridList,
+  GridTile,
+  Input,
+  InputSyntheticEvent,
+  Select,
+  Option,
+  OptionSyntheticEvent,
+} from '@scribos/design';
+import { SimplePreviewForm, SimplePreviewFormImpl } from '@core/models';
+
+import {
+  SetFormsPreviewData,
+  setFormsPreviewData,
+} from '@store/actions/forms.action';
+
+import { PreviewFormWrapper } from './preview-form-wrapper.component';
+
+import { DependencyContainerContext } from '@core/contexts';
+import { Container } from 'inversify';
+
+import {
+  LoggerService,
+  LoggerServiceConstant,
+} from '@core/services/logger-service';
+
 import './preview-form.component.scss';
 
+type PreviewFormState = { simplePreviewForm: SimplePreviewForm };
+
+type PreviewFormStateProps = {
+  formsPreview?: FormInternalState[];
+};
+
+type PreviewFormDispatchProps = {
+  setFormsPreviewData?: (payload: InputSyntheticEvent) => SetFormsPreviewData;
+};
+
 /* eslint-disable-next-line */
-export interface PreviewFormProps {}
+export type PreviewFormProps = PreviewFormStateProps & PreviewFormDispatchProps;
 
 /**
  * Preview Form Implementation.
@@ -14,33 +57,123 @@ export interface PreviewFormProps {}
  * @typedef {PreviewForm}
  * @extends {Component<PreviewFormProps>}
  */
-export class PreviewForm extends Component<PreviewFormProps> {
+
+@ReactiveConnect(null, {
+  setFormsPreviewData,
+} as PreviewFormDispatchProps)
+export class PreviewForm extends Component<PreviewFormProps, PreviewFormState> {
   /**
-   * Wrapper for Preview Form.
-   *
-   * @private static methods.
-   * @static Wrapper
-   * @type {*} of TwComponent.
+   * Get Preview Form Default Name.
+   * @static
+   * @type string
+   * @memberof PreviewForm
    */
-  private static Wrapper = tw.div`max-w-full laptop:w-1/2 rounded-md mx-auto px-6 py-4 shadow`;
+  public static displayName: string = PreviewForm.name;
 
   /**
-   * Grid List for Preview Form.
+   * Create and resolve context type as DI container.
    *
-   * @private static methods.
-   * @static GridList
-   * @type {*} of TwComponent.
+   * @static context type.
+   * @type React.Context<Container>
+   * @memberof PreviewForm
    */
-  private static GridList = tw.div`grid grid-cols-12 grid-flow-row-dense gap-6`;
+  public static contextType: React.Context<Container> =
+    DependencyContainerContext;
+  /**
+   * Preview form element ref of preview form
+   */
+  private readonly _previewFormElementRef: React.RefObject<HTMLFormElement>;
 
   /**
-   * Grid List Item for Preview Form.
+   * Creates an instance of PreviewForm.
    *
-   * @private static methods.
-   * @static GridListItem
-   * @type {*} of TwComponent.
+   * @param  {Readonly<PreviewFormProps>} props
+   * @memberof PreviewForm
    */
-  private static GridListItem = tw.div`flex justify-center items-center justify-items-center`;
+  public constructor(props: Readonly<PreviewFormProps>) {
+    super(props);
+
+    this.state = {
+      simplePreviewForm: new SimplePreviewFormImpl(
+        StringUtil.EMPTY,
+        StringUtil.EMPTY,
+        StringUtil.EMPTY,
+        0
+      ),
+    };
+
+    this._previewFormElementRef = React.createRef<HTMLFormElement>();
+
+    this._handleSubmitEvent = this._handleSubmitEvent.bind(this);
+    this._handleNativeFormsEvent = this._handleNativeFormsEvent.bind(this);
+  }
+
+  /**
+   * Handle Native Option Event.
+   *
+   * @private
+   * @param  {OptionSyntheticEvent} event
+   * @return {void}
+   * @memberof PreviewForm
+   */
+  private _handleNativeFormsEvent(
+    event: OptionSyntheticEvent | InputSyntheticEvent
+  ): void {
+    this.props.setFormsPreviewData?.(event);
+  }
+
+  /**
+   * Handle submit events.
+   *
+   * @private
+   * @param  {React.FormEvent<HTMLFormElement>} event
+   * @return {void}@memberof PreviewForm
+   */
+  private _handleSubmitEvent(event: React.FormEvent<HTMLFormElement>): void {
+    const loggerService: LoggerService = (
+      this.context as Container
+    ).get<LoggerService>(LoggerServiceConstant);
+
+    loggerService.debug('Sync Submit Event');
+  }
+
+  /**
+   * Resolve derived state from props.
+   *
+   * @static
+   * @param  {Readonly<PreviewFormProps>} prevProps
+   * @param  {PreviewFormState} prevState
+   * @return Readonly<PreviewFormState>
+   * @memberof PreviewForm
+   */
+  public static getDerivedStateFromProps(
+    prevProps: Readonly<PreviewFormProps>,
+    prevState: PreviewFormState
+  ): Readonly<PreviewFormState> {
+    const simplePreviewForm: SimplePreviewForm = prevState.simplePreviewForm;
+
+    return { simplePreviewForm };
+  }
+
+  /**
+   * Force update for state
+   * in the case of updated fields.
+   *
+   * @param  {Readonly<PreviewFormProps>} nextProps
+   * @param  {PreviewFormState} nextState
+   * @return boolean
+   * @memberof PreviewForm
+   */
+  public shouldComponentUpdate(
+    nextProps: Readonly<PreviewFormProps>,
+    nextState: PreviewFormState
+  ): boolean {
+    if (nextProps.formsPreview) {
+      return true;
+    }
+
+    return false;
+  }
 
   /**
    * Render preview form context.
@@ -50,56 +183,114 @@ export class PreviewForm extends Component<PreviewFormProps> {
    * @returns {JSX.Element}
    */
   public override render(): JSX.Element {
+    const { formsPreview }: Readonly<PreviewFormStateProps> = this.props;
+
+    // @internal render preview form.
     return (
-      <Fragment>
-        <div className="flex flex-row flex-nowrap">
-          <div className="flex-auto justify-center justify-self-center">
-            <PreviewForm.Wrapper>
-              <PreviewForm.GridList>
-                <PreviewForm.GridListItem className="col-span-12 tablet:col-span-6">
-                  <div className="">
-                    <form>
-                      <div className="">
-                        <label>
-                          Part Type
-                          <input />
-                        </label>
-                      </div>
-
-                      <div className="">
-                        <label>
-                          Product Code
-                          <input />
-                        </label>
-                      </div>
-
-                      <div className="">
-                        <label>
-                          Country of origin
-                          <input />
-                        </label>
-                      </div>
-
-                      <div className="">
-                        <label>
-                          Part description
-                          <input />
-                        </label>
-                      </div>
-                    </form>
-                  </div>
-                </PreviewForm.GridListItem>
-                <PreviewForm.GridListItem className="col-span-12 tablet:col-span-6">
-                  <div className="">
-                    <Preview />
-                  </div>
-                </PreviewForm.GridListItem>
-              </PreviewForm.GridList>
-            </PreviewForm.Wrapper>
-          </div>
+      <div className="flex flex-row flex-nowrap">
+        <div className="flex-shrink justify-center justify-self-center">
+          <PreviewFormWrapper>
+            <GridList>
+              <GridTile className="col-span-12 tablet:col-span-5">
+                <div className="block relative min-h-full">
+                  <Formik
+                    initialValues={
+                      this.state.simplePreviewForm as SimplePreviewForm &
+                        FormEvent<HTMLFormElement>
+                    }
+                    onSubmit={this._handleSubmitEvent}
+                  >
+                    {({ handleSubmit }) => (
+                      <form
+                        role="contentinfo"
+                        id={PreviewForm.displayName}
+                        ref={this._previewFormElementRef}
+                        name={PreviewForm.displayName}
+                        onSubmit={handleSubmit}
+                        contentEditable={false}
+                      >
+                        {formsPreview &&
+                          formsPreview.map?.(
+                            ({
+                              label,
+                              code,
+                              defaultValue,
+                              selectable,
+                              options,
+                              value,
+                            }) => (
+                              <div
+                                key={code}
+                                className={classnames('form-control', {
+                                  active:
+                                    selectable ||
+                                    (!selectable && value && value),
+                                })}
+                              >
+                                <Input.Label id={code}>
+                                  {!selectable ? (
+                                    <Input
+                                      id={code}
+                                      name={label}
+                                      onInput={this._handleNativeFormsEvent}
+                                    />
+                                  ) : (
+                                    <Select
+                                      id={code}
+                                      name={label}
+                                      value={
+                                        (value as unknown as FormMultiOption)
+                                          ?.label ||
+                                        (defaultValue as FormMultiOption).label
+                                      }
+                                      placeholder={
+                                        (value as unknown as FormMultiOption)
+                                          ?.label ||
+                                        (defaultValue as FormMultiOption).label
+                                      }
+                                    >
+                                      {options &&
+                                        options?.map(
+                                          (
+                                            option: FormMultiOption,
+                                            index: number
+                                          ) => (
+                                            <Option
+                                              key={index}
+                                              code={code}
+                                              value={option}
+                                              label={label}
+                                              onClick={
+                                                this._handleNativeFormsEvent
+                                              }
+                                            >
+                                              {option.label}
+                                            </Option>
+                                          )
+                                        )}
+                                    </Select>
+                                  )}
+                                </Input.Label>
+                                <div className="form-control-label">
+                                  {label}
+                                </div>
+                              </div>
+                            )
+                          )}
+                      </form>
+                    )}
+                  </Formik>
+                </div>
+              </GridTile>
+              <GridTile className="col-span-12 tablet:col-span-7">
+                <div className="block relative min-h-full rounded-sm border-hawkes-blue border">
+                  <Preview />
+                </div>
+              </GridTile>
+            </GridList>
+          </PreviewFormWrapper>
         </div>
-        <div className=""></div>
-      </Fragment>
+      </div>
     );
   }
 }

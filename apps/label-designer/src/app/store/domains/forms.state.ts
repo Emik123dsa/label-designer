@@ -15,6 +15,16 @@ export type FormMultiOption = Pick<FormInternalState, 'label' | 'code'>;
 export type FormSimpleOption = string | number | symbol;
 
 /**
+ * Form Internal Constants.
+ *
+ * @export
+ * @typedef FormInternalConstants
+ */
+export enum FormInternalConstants {
+  PREVIEW = 'preview',
+}
+
+/**
  * Form Internal State.
  *
  * @export
@@ -24,6 +34,7 @@ export interface FormInternalState {
   label: string;
   code: string;
   selectable: boolean;
+  value?: FormMultiOption | FormSimpleOption;
   defaultValue: FormMultiOption | FormSimpleOption;
   options?: FormMultiOption[];
 }
@@ -35,5 +46,10 @@ export interface FormInternalState {
  * @interface FormsState
  */
 export interface FormsState {
-  internals: Map<string, FormInternalState>;
+  internals: Map<FormInternalConstants, FormInternalState[]> | null;
 }
+
+/**
+ * Forms State Map Helper.
+ */
+export type FormsStateMap = Map<FormInternalConstants, FormInternalState[]>;

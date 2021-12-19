@@ -4,6 +4,7 @@ import { Header, Footer } from '@layouts';
 import { routes } from './preview/preview-routing.module';
 
 import './app.component.scss';
+import { Background } from './shared/layouts/background/background.component';
 
 /* eslint-disable-next-line */
 export interface AppProps {}
@@ -29,6 +30,7 @@ export class App extends Component<AppProps, unknown> {
           {renderRoutes(routes)}
         </main>
         <Footer.Layout />
+        <Background.StaticLayout width="full" height="full" />
       </Fragment>
     );
   }

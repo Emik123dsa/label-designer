@@ -1,0 +1,62 @@
+// Form control label mixin.
+@mixin form-control-label($offset: 4, $font-size: 14px, $opacity: 30) {
+  @apply opacity-#{$opacity};
+  @apply text-[#{$font-size}];
+  @apply absolute
+         top-1/2
+         transform-cpu
+         -translate-y-1/2
+         left-#{$offset};
+}
+
+// Form control active mixin.
+@mixin form-control-active(
+  $opacity: 100,
+  $offset: 3,
+  $offset-top: 1px,
+  $offset-width: 1
+) {
+  @apply top-[#{$offset-top}];
+  @apply text-dark text-sm;
+  @apply bg-white text-primary
+         opacity-#{$opacity};
+  @apply block left-#{$offset} px-#{$offset-width};
+}
+
+// Form control animation.
+@mixin form-control-animation($duration: 200) {
+  @apply transition-all
+         duration-#{$duration};
+}
+
+form .form {
+  &-control {
+    @include form-control-animation();
+
+    &:first-child {
+      @apply mt-0;
+    }
+
+    &:last-child {
+      @apply mb-0;
+    }
+
+    @apply relative
+           inline-block;
+
+    &.active > .form-control-label {
+      input {
+        @apply border-primary #{!important};
+      }
+      @include form-control-active();
+    }
+
+    @apply mb-4 w-full min-w-full;
+    &-label {
+      @include form-control-label();
+      @include form-control-animation();
+      @apply select-none
+             pointer-events-none;
+    }
+  }
+}

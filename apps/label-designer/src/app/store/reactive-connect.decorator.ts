@@ -45,4 +45,4 @@ interface CustomConnect<K extends AppState> {
   ): InferableComponentEnhancerWithProps<TMergedProps, TOwnProps>;
 }
 
-export const Connect = originalConnect as CustomConnect<AppState>;
+export const ReactiveConnect = originalConnect as CustomConnect<AppState>;

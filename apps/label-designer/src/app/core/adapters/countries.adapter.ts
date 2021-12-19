@@ -1,3 +1,4 @@
+import { injectable as Injectable } from 'inversify';
 import { Subject, Observable } from 'rxjs';
 
 /**
@@ -6,6 +7,7 @@ import { Subject, Observable } from 'rxjs';
  * @export CountriesAdapter of generic type resolver.
  * @class CountriesCodeFactory
  */
+@Injectable()
 export abstract class CountriesAdapter<T, L = unknown> {
   /**
    * Default locale provider.
@@ -51,6 +53,7 @@ export abstract class CountriesAdapter<T, L = unknown> {
    */
   protected setLocale(locale: L): void {
     this._locale = locale;
+
     this._localeChanges.next();
   }
 }

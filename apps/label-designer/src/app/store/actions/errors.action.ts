@@ -1,32 +1,35 @@
 import { Action } from 'redux';
+import { FormInternalConstants } from '../domains/forms.state';
 
 export enum ErrorsActionType {
-  SetInternalsFormsErrors = '@@ERRORS/SET_INTERNALS_FORMS_ERRORS',
-  ResetInternalsFormsErrors = '@@ERRORS/RESET_INTERNALS_FORMS_ERRORS',
+  SetFormsErrors = '@@ERRORS/SET_INTERNALS_FORMS_ERRORS',
+  ResetFormsErrors = '@@ERRORS/RESET_FORMS_ERRORS',
 }
 
-export interface SetInternalsFormsErrors extends Action {
-  type: ErrorsActionType.SetInternalsFormsErrors;
+export interface SetFormsErrors extends Action {
+  type: ErrorsActionType.SetFormsErrors;
   payload: unknown;
 }
 
-export interface ResetInternalsFormsErrors extends Action {
-  type: ErrorsActionType.SetInternalsFormsErrors;
+export interface ResetFormsErrors extends Action {
+  type: ErrorsActionType.SetFormsErrors;
   payload: unknown;
 }
 
-export const setInternalsFormsErrors: (
+// SetFormsErrors for settings forms errors.
+export const setFormsErrors: (payload: unknown) => SetFormsErrors = (
   payload: unknown
-) => SetInternalsFormsErrors = (payload: unknown): SetInternalsFormsErrors => ({
-  type: ErrorsActionType.SetInternalsFormsErrors,
+): SetFormsErrors => ({
+  type: ErrorsActionType.SetFormsErrors,
   payload,
 });
 
-export const resetInternalsFormsErrors: (
-  payload: unknown
-) => SetInternalsFormsErrors = (payload: unknown): SetInternalsFormsErrors => ({
-  type: ErrorsActionType.SetInternalsFormsErrors,
+// ResetFormsErrors for settings forms errors.
+export const resetFormsErrors: (
+  payload: FormInternalConstants
+) => ResetFormsErrors = (payload: FormInternalConstants): ResetFormsErrors => ({
+  type: ErrorsActionType.SetFormsErrors,
   payload,
 });
 
-export type ErrorsAction = SetInternalsFormsErrors | ResetInternalsFormsErrors;
+export type ErrorsAction = SetFormsErrors | ResetFormsErrors;

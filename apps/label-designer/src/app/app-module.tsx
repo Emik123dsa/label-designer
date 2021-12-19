@@ -9,19 +9,26 @@ import { createBrowserHistory, History } from 'history';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { AppState } from './store/domains/app.state';
+import { ThemeContext } from '@emotion/react';
+import {
+  DependencyContainerContext,
+  DependencyContainerFactory,
+  ThemeContextConstants,
+  ThemeContextTypeFactory,
+} from './core/contexts';
+import { IconContext } from 'react-icons';
+import { IconContextFactory } from './core/contexts/icon.context';
 
 /**
- * App Module Component.
+ * App Module.
  *
  * @export
  * @class AppModule
  * @extends Component<unknown, unknown>
  */
 export class AppModule extends Component<unknown, unknown> {
-  private static readonly PROVIDER: string = 'provider';
-
   /**
-   * History Browser Factory.
+   * History Browser Provider.
    *
    * @private
    * @type BrowserHistory
@@ -30,21 +37,29 @@ export class AppModule extends Component<unknown, unknown> {
   private readonly _history: History = createBrowserHistory();
 
   /**
-   * Render app module components.
+   * Initialize App Module.
    *
    * @returns an instance of elements refs.
    */
   public override render(): JSX.Element {
-    const storeFactory: StoreModuleFactory = new StoreModuleFactory();
-
-    storeFactory.setHistory(this._history);
-
-    const store: Store<AppState, AnyAction> = storeFactory.configure();
-
+    const factory: StoreModuleFactory = new StoreModuleFactory();
+    factory.setHistory(this._history);
+    const store: Store<AppState, AnyAction> = factory.configure();
     return (
-      <Provider key={AppModule.PROVIDER} store={store}>
-        <ConnectedRouter history={this._history} children={staticRoutes} />;
-      </Provider>
+      <ThemeContext.Provider value={ThemeContextTypeFactory.create()}>
+        <IconContext.Provider value={IconContextFactory.create()}>
+          <DependencyContainerContext.Provider
+            value={DependencyContainerFactory.create()}
+          >
+            <Provider key={AppModule.name} store={store}>
+              <ConnectedRouter
+                history={this._history}
+                children={staticRoutes}
+              />
+            </Provider>
+          </DependencyContainerContext.Provider>
+        </IconContext.Provider>
+      </ThemeContext.Provider>
     );
   }
 }

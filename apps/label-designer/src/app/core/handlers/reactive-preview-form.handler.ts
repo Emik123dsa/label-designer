@@ -1,4 +1,5 @@
-import type { EventHandler } from './event-handler';
+import { injectable as Injectable } from 'inversify';
+import type { EventHandler } from './event.handler';
 
 /**
  * Reactive implementation of {@link EventHandler}
@@ -10,6 +11,7 @@ import type { EventHandler } from './event-handler';
  *
  * @author Emil Shari <emil.shari87@gmail.com>
  */
+@Injectable()
 export class ReactivePreviewFormHandler implements EventHandler {
   /**
    * Process form events with handler listener.

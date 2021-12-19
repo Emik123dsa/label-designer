@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Design from './design-module';
+import GridList from './grid-list.component';
 
-describe('Design', () => {
+describe('GridList', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Design />);
+    const { baseElement } = render(<GridList />);
     expect(baseElement).toBeTruthy();
   });
 });

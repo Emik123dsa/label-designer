@@ -1,7 +1,6 @@
 import { routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
 import {
-  AnyAction,
   applyMiddleware,
   compose,
   createStore,
@@ -10,11 +9,19 @@ import {
   Store,
   StoreEnhancer,
 } from 'redux';
-import { createEpicMiddleware, EpicMiddleware } from 'redux-observable';
 
-import { AppState } from './domains/app.state';
-import { appReducer } from './reducers/app.reducer';
-import { getInitialAppState } from './state/app.state';
+import {
+  DependencyContainer,
+  DependencyContainerFactory,
+} from '@core/contexts';
+import type { AppAction } from '@store/actions/app.action';
+
+import { createEpicMiddleware, EpicMiddleware } from 'redux-observable';
+import { AppState } from '@store/domains/app.state';
+import { appEpic } from '@store/epics/app.epic';
+import { appReducer } from '@store/reducers/app.reducer';
+import { getInitialAppState } from '@store/state/app.state';
+import { Container } from 'inversify';
 
 /**
  * Store Module Factory.
@@ -49,48 +56,57 @@ export class StoreModuleFactory {
    */
   public configure(
     initialAppState: AppState = getInitialAppState()
-  ): Store<AppState, AnyAction> {
+  ): Store<AppState, AppAction> {
     /**
      *  Epic middleware configurator.
      */
-    const epicMiddleware: EpicMiddleware<AnyAction, AnyAction, void, unknown> =
-      createEpicMiddleware();
+    const epicMiddleware: EpicMiddleware<
+      AppAction,
+      AppAction,
+      AppState,
+      DependencyContainer
+    > = createEpicMiddleware<
+      AppAction,
+      AppAction,
+      AppState,
+      DependencyContainer
+    >({ dependencies: DependencyContainerFactory.create() as Container });
 
     /**
      *  Middlewares for initialized store.
      */
-    const middlewares: Middleware<unknown, unknown, Dispatch<AnyAction>>[] = [
-      epicMiddleware,
-      routerMiddleware(this._history),
-    ];
+    const middlewares: Middleware<AppAction, AppState, Dispatch<AppAction>>[] =
+      [epicMiddleware, routerMiddleware(this._history)];
 
     /**
      * Enhancers for initialized store.
      */
-    const enhancers: StoreEnhancer<unknown, AppState>[] = [
+    const enhancers: StoreEnhancer<{ dispatch: unknown }, AppState>[] = [
       applyMiddleware(...middlewares),
     ];
 
     /**
-     * Listen composer enhancers with development mode.
+     * Listen compose enhancers with development mode.
      */
     const composeEnhancers: typeof compose =
       process.env.NODE_ENV !== 'production' &&
       typeof window === 'object' &&
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
         ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-            shouldHotReload: false,
+            shouldHotReload: true,
           })
         : compose;
 
     /**
      * Create an instance of store object.
      */
-    const store: Store<AppState, AnyAction> = createStore(
+    const store: Store<AppState, AppAction> = createStore(
       appReducer(this._history),
       initialAppState,
       composeEnhancers(...enhancers)
     );
+
+    epicMiddleware.run(appEpic);
 
     return store;
   }

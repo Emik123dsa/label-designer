@@ -11,7 +11,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "files": [],
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "src/lib/core/option/option.component.tsx"],
   "references": [
     {
       "path": "./tsconfig.lib.json"

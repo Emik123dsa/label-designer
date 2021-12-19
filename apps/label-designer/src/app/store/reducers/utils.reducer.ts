@@ -1,14 +1,12 @@
-import { AnyAction } from 'redux';
+import { Reducer } from 'redux';
 
 import { UtilsState } from '@store/domains/utils.state';
 import { initialUtilsState } from '@store/state/utils.state';
+import { UtilsAction } from '@store/actions/utils.action';
 
-export const utilsReducer: (
-  state: UtilsState,
-  action: AnyAction
-) => UtilsState = (
+export const utilsReducer: Reducer<UtilsState, UtilsAction> = (
   state: UtilsState = initialUtilsState,
-  action: AnyAction
+  action: UtilsAction
 ): UtilsState => {
   return state;
 };

@@ -1,0 +1,116 @@
+@use 'sass:map';
+
+$separator: (
+  width: 1px,
+  offset: (
+    right: 8,
+    top: 1px,
+    bottom: 2px,
+  ),
+  duration: 200,
+);
+
+@mixin select-core-icon($offset: 2) {
+  @apply select-none
+         pointer-events-none;
+
+  @apply right-#{$offset}
+         top-1/2
+         absolute
+         -translate-y-1/2;
+}
+
+::-webkit-scrollbar {
+  @apply w-1;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: auto;
+  -webkit-border-radius: auto;
+  @apply rounded-md;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-hawkes-blue rounded-none;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: auto;
+}
+
+.select {
+  > input {
+    @apply cursor-pointer #{!important};
+  }
+
+  & > input {
+    &:focus {
+    }
+  }
+
+  &-dropdown {
+    @apply relative inline-block;
+
+    &-options {
+      @apply z-50 mt-1 text-[14px];
+      @apply absolute
+             block w-full;
+      @apply shadow-md rounded-sm;
+
+      > ul {
+        @apply max-h-32;
+        @apply min-w-full w-fit overflow-y-auto;
+
+        & > li {
+          &:first-child {
+            @apply mt-0;
+          }
+
+          &:last-child {
+            @apply mb-0;
+          }
+
+          @apply block relative;
+
+          &:hover {
+            &::before {
+              @apply w-full
+                     h-full
+                     left-0
+                     top-0
+                     absolute
+                     bg-hawkes-blue;
+            }
+          }
+
+          @apply hover:before:content-[''] hover:before:opacity-20;
+          @apply text-dark;
+          @apply cursor-pointer;
+          @apply bg-white py-2 px-4;
+        }
+      }
+    }
+
+    &-icon {
+      @include select-core-icon();
+
+      @apply transition-all
+             duration-#{map.get($separator, duration)};
+
+      &.active {
+        @apply rotate-180;
+      }
+    }
+
+    &-separator {
+      @apply bg-hawkes-blue;
+      @apply pointer-events-none select-none;
+      @apply absolute
+             top-[#{map.get($separator, offset, top)}]
+             bottom-[#{map.get($separator, offset, bottom)}]
+             w-[#{map.get($separator, width)}]
+             right-#{map.get($separator, offset, right)};
+    }
+  }
+}

@@ -1,12 +1,29 @@
-import { FormInternalState, FormsState } from '../domains/forms.state';
+import {
+  FormInternalState,
+  FormMultiOption,
+  FormsState,
+} from '@store/domains/forms.state';
 
-const internalsForms: FormInternalState[] = [
+// FormInternalState initial forms state.
+const internalsForms: (options: FormMultiOption[]) => FormInternalState[] = (
+  options: FormMultiOption[]
+) => [
   {
     label: 'Part type',
     code: 'type',
     selectable: true,
     defaultValue: { label: 'Engine part', code: 'EP' },
-    options: [{ label: 'Engine part', code: 'EP' }],
+    options: [
+      { label: 'Engine part', code: 'EP' },
+      { label: 'Triebwerk', code: 'EP' },
+      { label: 'Vergaser', code: 'VE' },
+      { label: 'Kupplung', code: 'KU' },
+      { label: 'Turbostrahl', code: 'TST' },
+      {
+        label: 'Brennkammer',
+        code: 'BK',
+      },
+    ],
   },
   {
     label: 'Product code',
@@ -19,7 +36,7 @@ const internalsForms: FormInternalState[] = [
     selectable: true,
     code: 'countryCode',
     defaultValue: { label: 'France', code: 'FR' },
-    options: [{ label: 'France', code: 'FR' }],
+    options,
   },
   {
     label: 'Part description',
@@ -29,12 +46,20 @@ const internalsForms: FormInternalState[] = [
   },
 ];
 
-const maps = new Map<string, FormInternalState>();
+/**
+ * Initial Forms State Factory.
+ *
+ * @returns an instance of all forms.
+ */
+export const initialFormsStateFactory: (
+  options: ReadonlyArray<FormMultiOption>
+) => FormInternalState[] = (
+  options: ReadonlyArray<FormMultiOption>
+): FormInternalState[] => {
+  return internalsForms(options as FormMultiOption[]);
+};
 
-internalsForms.forEach((internalForm) =>
-  maps.set(internalForm.code, internalForm)
-);
-
+// FormsState initial state.
 export const initialFormsState: FormsState = {
-  internals: maps,
+  internals: null,
 };

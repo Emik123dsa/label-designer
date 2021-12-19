@@ -6,7 +6,7 @@ import type { A11yAriaAttrs } from '../core/a11y';
 
 import './button.component.scss';
 
-export type UnknownComponent = React.Component<unknown, unknown>;
+type UnknownComponent = React.Component<unknown, unknown>;
 
 let nextUniqueId = 0;
 
@@ -108,7 +108,7 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     this._stateChanges.asObservable();
 
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  public static defaultName: string = `button-${++nextUniqueId}`;
+  public static displayName: string = `button-${++nextUniqueId}`;
 
   /**
    * Default props factory.
@@ -183,13 +183,13 @@ export class Button extends React.PureComponent<ButtonProps, ButtonState> {
     return (
       <button
         id={id || nextUniqueId.toString()}
-        name={name || Button.defaultName}
+        name={name || Button.displayName}
         className={classnames('btn', 'btn-block', {
           [['btn', color].join(Button.HYPHEN_SYMBOL)]: true,
         })}
         type={type}
         disabled={disabled}
-        aria-label={ariaLabel || Button.defaultName}
+        aria-label={ariaLabel || Button.displayName}
         aria-hidden={ariaHidden || disabled}
       >
         {this._renderChildrenRef()}

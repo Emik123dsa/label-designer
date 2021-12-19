@@ -1,0 +1,43 @@
+.input {
+  @apply px-4 py-2;
+
+  @apply overflow-clip;
+
+  @apply break-words
+         text-ellipsis;
+
+  @apply relative;
+
+  @apply inline-block w-full min-w-full;
+
+  @apply border-hawkes-blue
+         text-dark
+         dark:font-bold
+         focus:border-primary
+         outline-offset-0
+         outline-0
+         border-collapse;
+
+  @apply outline-none
+         focus:outline-none;
+
+  @apply align-middle
+         font-normal text-left
+         rounded-sm;
+
+  @apply transition-colors
+         delay-100
+         duration-100;
+
+  @apply border border-b-2 ring-offset-2 ring-4 #{!important};
+}
+
+input:focus {
+  @apply shadow-none outline-none
+         focus:outline-none;
+}
+
+input:active {
+  @apply outline-none
+         focus:outline-none;
+}

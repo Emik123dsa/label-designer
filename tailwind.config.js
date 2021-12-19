@@ -8,6 +8,8 @@ const defaultContent = [path.resolve('apps/**/*.{ts,tsx,html}')];
 module.exports = {
   mode: 'jit',
 
+  important: '#root',
+
   content: defaultContent.concat(
     createGlobPatternsForDependencies(
       path.join(__dirname, 'apps/label-designer/**/*.{ts,tsx,jsx,js,html}')
@@ -23,11 +25,31 @@ module.exports = {
 
   darkMode: 'class',
 
+  whitelist: ['dark-mode'],
+
+  theme: {
+    darkSelector: '.dark-mode',
+  },
+
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
+      ringWidth: {},
+      boxShadow: {
+        forms:
+          '0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       },
+    },
+    fontFamily: {
+      primary: ['var(--fonts-primary)', 'sans-serif'],
+      secondary: ['var(--fonts-secondary)', 'sans-serif'],
+
+      bold: ['var(--fonts-bold)', 'sans-serif'],
+      thin: ['var(--fonts-thin)', 'sans-serif'],
+      light: ['var(--fonts-light)', 'sans-serif'],
+      medium: ['var(--fonts-medium)', 'sans-serif'],
+      regular: ['var(--fonts-regular)', 'sans-serif'],
+      semibold: ['var(--fonts-semibold)', 'sans-serif'],
+      extrabold: ['var(--fonts-extrabold)', 'sans-serif'],
     },
 
     screens: {
@@ -56,12 +78,18 @@ module.exports = {
     borderColor: {
       dark: 'var(--colors-dark)',
       white: 'var(--colors-white)',
+      hawkes: {
+        blue: 'var(--colors-hawkes-blue)',
+      },
       primary: 'var(--colors-primary)',
       secondary: 'var(--colors-secondary)',
     },
 
     colors: {
       dark: 'var(--colors-dark)',
+      hawkes: {
+        blue: 'var(--colors-hawkes-blue)',
+      },
       white: 'var(--colors-white)',
       primary: 'var(--colors-primary)',
       secondary: 'var(--colors-secondary)',
@@ -77,6 +105,9 @@ module.exports = {
           white: {
             DEFAULT: '#FFFFFF',
           },
+          hawkes: {
+            blue: '#DADCE0',
+          },
           primary: {
             DEFAULT: '#0097d4',
           },
@@ -84,15 +115,32 @@ module.exports = {
             DEFAULT: '#e7000f',
           },
         },
+        fonts: {
+          primary: {
+            DEFAULT: 'Montserrat Regular',
+          },
+          secondary: {
+            DEFAULT: 'Montserrat Medium',
+          },
+          thin: { DEFAULT: 'Montserrat Thin' },
+          medium: { DEFAULT: 'Montserrat Medium' },
+          regular: { DEFAULT: 'Montserrat Regular' },
+          light: { DEFAULT: 'Montserrat Light' },
+          bold: { DEFAULT: 'Montserrat Bold' },
+          semibold: { DEFAULT: 'Montserrat Semibold' },
+          extrabold: { DEFAULT: 'Montserrat Extrabold' },
+        },
       },
     },
+
     fontSize: {
-      base: '1rem',
       xs: '0.5rem',
       sm: '0.75rem',
-      md: '1.5rem',
-      lg: '1.75rem',
-      xl: '2rem',
+      base: '1rem',
+      md: '1.25rem',
+      lg: '1.5rem',
+      xl: '1.75rem',
+      '2xl': '2rem',
     },
 
     container: {
@@ -100,6 +148,7 @@ module.exports = {
       padding: '1.5rem',
     },
   },
+
   variantOrder: [
     'first',
     'last',
@@ -120,17 +169,27 @@ module.exports = {
 
   variants: {
     extend: {
-      borderColor: ['focus-visible'],
-      opacity: ['responsive', 'hover'],
-      borderWidth: ['responsive', 'hover'],
+      backgroundColor: [
+        'dark',
+        'dark-hover',
+        'dark-group-hover',
+        'dark-even',
+        'dark-odd',
+      ],
+      borderColor: ['dark', 'dark-disabled', 'dark-focus', 'dark-focus-within'],
+      textColor: ['dark', 'dark-hover', 'dark-active', 'dark-placeholder'],
     },
   },
 
   plugins: [
     /* require('@tailwindcss/ui'),
        require('@tailwindcss/jit'), */
+    require('tailwindcss-dark-mode')(),
     require('@mertasan/tailwindcss-variables'),
-    require('@tailwindcss/forms'),
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
+    require('tailwindcss-rtl'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
     require('tailwindcss-children'),

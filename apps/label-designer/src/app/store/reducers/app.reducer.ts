@@ -1,43 +1,21 @@
 import { History } from 'history';
-
-import { connectRouter, RouterState } from 'connected-react-router';
-import {
-  Action,
-  AnyAction,
-  CombinedState,
-  combineReducers,
-  Reducer,
-} from 'redux';
-import { AppState } from '@store/domains/app.state';
+import { AnyAction, CombinedState, combineReducers, Reducer } from 'redux';
+import { connectRouter } from 'connected-react-router';
 
 import { errorsReducer } from './errors.reducer';
 import { formsReducer } from './forms.reducer';
 import { utilsReducer } from './utils.reducer';
 
-export const appReducer: (history: History) => Reducer<
-  CombinedState<
-    | {
-        router: RouterState<unknown>;
-      }
-    | AppState
-  >,
-  AnyAction
-> = (
-  history: History
-): Reducer<
-  CombinedState<
-    | {
-        router: RouterState<unknown>;
-      }
-    | AppState
-  >,
-  AnyAction
-> =>
+import type { AppRouterState } from '@store/domains/app.state';
+
+export const appReducer: (
+  currentHistory: History
+) => Reducer<CombinedState<AppRouterState>, AnyAction> = (
+  currentHistory: History
+): Reducer<CombinedState<AppRouterState>, AnyAction> =>
   combineReducers({
-    router: connectRouter(history),
+    router: connectRouter(currentHistory),
     forms: formsReducer,
     utils: utilsReducer,
     errors: errorsReducer,
-    // TODO: resolve combine reducers errors.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) as Reducer<CombinedState<any>, AnyAction>;
+  });

@@ -14,4 +14,7 @@ export interface A11yAriaAttrs {
   ariaLabelledBy: string;
   ariaDescribedBy: string;
   ariaInvalid: boolean;
+  ariaActivedescendant: string;
+  ariaHasPopUp: boolean;
+  ariaOwns: string;
 }
